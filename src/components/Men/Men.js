@@ -1,0 +1,1 @@
+//Be sure to create a seperate folder to house the reusable component that will be used to display all products

@@ -1,0 +1,1 @@
+//Create seperate components in seperate folders to represent each view and render them here using a ternary to conditionally render different views for user/admin profiles.
