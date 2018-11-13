@@ -18,7 +18,7 @@ class Header extends Component {
                         <div className="upperHeader">
 
                         <div className="headLeft">
-                        <h2>BackCountry</h2> <input placeholder="Search" onChange={(e) => this.setState({ searchBar: e.target.value })} /> 
+                        <Link to='/'><h2>BackCountry</h2></Link> <input placeholder="Search" onChange={(e) => this.setState({ searchBar: e.target.value })} /> 
                         </div>
 
                         <div className="headRight">
@@ -28,18 +28,14 @@ class Header extends Component {
                         </div>
                         <hr></hr>
                         <ul className="navigation">
-                            <li className="nav-item">Men</li>
-                            <li className="nav-item">Women</li>
-                            <li className="nav-item">Brands</li>
-                            <li className="nav-item">Activity</li>
-                            <li className="nav-item">Contact Us</li>
-                            {/* <Link className="nav-item"/>
-                            <Link className="nav-item"/>
-                            <Link className="nav-item"/>
-                            <Link className="nav-item"/>
-                            <Link className="nav-item"/> */}
+                            <Link to='/men'><li className="nav-item">Men</li></Link>
+                            <Link to='/women'><li className="nav-item">Women</li></Link>
+                            <Link to='/brand'><li className="nav-item">Brands</li></Link>
+                            <Link to='/activity'><li className="nav-item">Activity</li></Link>
+                            <Link to='/contact-us'><li className="nav-item">Contact Us</li></Link>
                         </ul>
                     </div>
+            
                
         )
     }
