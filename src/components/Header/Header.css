@@ -1,0 +1,40 @@
+.header{
+    width: 100%;
+ 
+ 
+   
+}
+
+input{
+    width: 600px;
+}
+
+.upperHeader{
+    display: flex;
+    justify-content: space-between; 
+}
+
+.headLeft{
+    width: 55%;
+    display: flex;
+    margin-left: 20px;
+    justify-content: space-evenly;
+}
+
+.headRight{
+    width: 25%;
+    display: flex;
+    margin-right: 20px;
+    justify-content: space-evenly;
+}
+
+.navigation{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nav-item{
+    flex-direction: row;
+    align-items: center;
+}
