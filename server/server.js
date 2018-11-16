@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const massive = require('massive');
+const controller = require('./controller');
 
 const {SERVER_PORT, MASSIVE_CONNECTION} = process.env;
 
@@ -17,6 +18,9 @@ app.use(express.json());
 
 // How to create sub folders in the db folder and call them in the server using massive.
 // app.get('api/test',(req, res) => {req.get('db').folder.file})
+
+app.get(`/product/brand/get-all`,controller.allBrands)
+
 
  
 
