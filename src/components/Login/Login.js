@@ -7,6 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import axios from 'axios';
 
 
  class Login extends Component {
@@ -65,6 +66,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
       updateLname = (e) => {
         this.setState({lName: e.target.value})
       };
+
+      signup = async () => {
+        if(!this.state.email || !this.state.pWord || !this.state.pWord2 || !this.state.fName || !this.state.lName) return alert('Please fill out all fields.');
+        if (this.state.pWord !== this.state.pWord2) return alert('Passwords do not match.');
+        else
+        {let res = await axios.post('/auth/signup',{
+          firstName: this.state.fName,
+          lastName: this.state.lName,
+          email: this.state.email,
+          password: this.state.pWord,
+        });
+        this.handleSignUpClose()
+      }}
 
   
     render() {
@@ -173,7 +187,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleSignUpClose} color="primary">
+              <Button onClick={this.signup} color="primary">
                 Sign Up
               </Button>
               <Button onClick={this.handleLoginCloseOpen} color="primary">

@@ -2,8 +2,10 @@ const express = require('express');
 require('dotenv').config();
 const massive = require('massive');
 const controller = require('./controller');
+const authCTRL = require('./authCTRL');
+const session = require('express-session')
 
-const {SERVER_PORT, MASSIVE_CONNECTION} = process.env;
+const {SERVER_PORT, MASSIVE_CONNECTION, SECRET} = process.env;
 
 const app = express();
 
@@ -15,12 +17,18 @@ massive(MASSIVE_CONNECTION).then(db => {
 
 //Middleware
 app.use(express.json());
+app.use(session({
+    secret: SECRET,
+    resave: false,
+    saveUninitialized: false
+}))
 
 // How to create sub folders in the db folder and call them in the server using massive.
 // app.get('api/test',(req, res) => {req.get('db').folder.file})
 
 app.get(`/product/brand/get-all`,controller.allBrands)
 
+app.post('/auth/signup', authCTRL.signup)
 
  
 

@@ -1,9 +1,10 @@
 const initialState = {
- status: 'loggedOut',
- brands: [],
+brands: [],
+user: {}
+
 }
 
-const LOG_IN_USER = 'LOG_IN_USER';
+const UPDATE_USER = 'UPDATE_USER';
 
 
 export default function reducer (
@@ -11,14 +12,18 @@ export default function reducer (
 ) {
     switch (action.type) {
 
+        case UPDATE_USER:
+        return {...state, user: action.payload }
 
         default: return state;
     }
 }
 
-export function logInUser(value){
+
+
+export function updateUser(userData){
     return {
-        type: LOG_IN_USER,
-        payload: value
+        type: UPDATE_USER,
+        payload: userData
     }
 }
