@@ -71,6 +71,22 @@ font-family: 'Muli', sans-serif;
         height: 45px;
         margin-top: 15px;
     }
+
+    .loginLogo{
+        width: 150px;
+        height: 150px;
+        /* margin-top: 15px; */
+        margin-left: 150px;;
+        margin-right: auto;
+    }
+
+    .signUpLogo{
+        width: 150px;
+        height: 150px;
+        /* margin-top: 15px; */
+        margin-left: 180px;;
+        margin-right: auto;
+    }
     
     .headerTitle{
         margin-top: 30px;

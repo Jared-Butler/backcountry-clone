@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import headerLogo from "./../../images/Home/logo.svg";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,10 +9,15 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 
- class Login extends React.Component {
+ class Login extends Component {
     state = {
       loginOpen: false,
       signUpOpen: false,
+      email: '',
+      pWord: '',
+      pWord2: '',
+      fName: '',
+      lName: '',
     };
   
     handleClickOpen = () => {
@@ -40,6 +46,26 @@ import DialogTitle from '@material-ui/core/DialogTitle';
         this.setState({ signUpOpen: false });
       };
 
+      updateEmail = (e) => {
+        this.setState({email: e.target.value})
+      };
+
+      updatePword = (e) => {
+        this.setState({pWord: e.target.value})
+      };
+
+      updatePword2 = (e) => {
+        this.setState({pWord2: e.target.value})
+      };
+
+      updateFname = (e) => {
+        this.setState({fName: e.target.value})
+      };
+
+      updateLname = (e) => {
+        this.setState({lName: e.target.value})
+      };
+
   
     render() {
       return (
@@ -55,8 +81,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
           >
             <DialogTitle id="form-dialog-title">Login</DialogTitle>
             <DialogContent>
+              <img className="loginLogo" src={headerLogo} alt ="" />
               <DialogContentText>
-               Enter your email and password to Login or create your HighCountry account.
+              Enter your email and password to log into your HighCountry account.
               </DialogContentText>
               <TextField
                 autoFocus
@@ -65,15 +92,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
                 label="Email Address"
                 type="email"
                 fullWidth
+                onChange={(e)=> this.updateEmail(e)}
               />
 
               <TextField
-                autoFocus
                 margin="dense"
                 id="loginPassword"
                 label="Password"
                 type="password"
                 fullWidth
+                onChange={(e)=> this.updatePword(e)}
               />
             </DialogContent>
             <DialogActions>
@@ -97,8 +125,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
           >
             <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
             <DialogContent>
+            <img className="signUpLogo" src={headerLogo} alt ="" />
               <DialogContentText>
-               Enter your email and password to Login or create your HighCountry account.
+               Enter your email and password to create your HighCountry account.
               </DialogContentText>
               <TextField
                 autoFocus
@@ -107,39 +136,48 @@ import DialogTitle from '@material-ui/core/DialogTitle';
                 label="First Name"
                 type="text"
                 fullWidth
+                onChange={(e)=> this.updateFname(e)}
               />
                <TextField
-                autoFocus
                 margin="dense"
                 id="lastName"
                 label="Last Name"
                 type="text"
                 fullWidth
+                onChange={(e)=> this.updateLname(e)}
               />
               <TextField
-                autoFocus
                 margin="dense"
                 id="email"
                 label="Email Address"
                 type="email"
                 fullWidth
+                onChange={(e)=> this.updateEmail(e)}
               />
 
               <TextField
-                autoFocus
                 margin="dense"
                 id="password"
                 label="Password"
                 type="password"
                 fullWidth
+                onChange={(e)=> this.updatePword(e)}
+              />
+              <TextField
+                margin="dense"
+                id="password2"
+                label="Retype Password"
+                type="password"
+                fullWidth
+                onChange={(e)=> this.updatePword2(e)}
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleLoginCloseOpen} color="primary">
-                Login
-              </Button>
               <Button onClick={this.handleSignUpClose} color="primary">
                 Sign Up
+              </Button>
+              <Button onClick={this.handleLoginCloseOpen} color="primary">
+                Login
               </Button>
             </DialogActions>
           </Dialog>

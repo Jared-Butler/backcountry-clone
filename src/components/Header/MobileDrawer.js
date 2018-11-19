@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -68,7 +67,7 @@ const styles = theme => ({
 
 
 render() {
-    const { classes, children } = this.props;
+    const { classes } = this.props;
     const { mobileOpen } = this.state;
 
     const drawer = (
