@@ -8,10 +8,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import { updateUser } from './../../ducks/reducer';
 
 
  class Login extends Component {
     state = {
+      user: {},
       loginOpen: false,
       signUpOpen: false,
       email: '',
@@ -77,15 +80,32 @@ import axios from 'axios';
           email: this.state.email,
           password: this.state.pWord,
         });
+
+        this.props.updateUser(res.data);
+
         this.handleSignUpClose()
       }}
+
+      login = async () => {
+        if(!this.state.email || !this.state.pWord) return alert("Please enter your email and password.");
+        else {
+          let res = await axios.post('/auth/login',{
+            email: this.state.email,
+          password: this.state.pWord,
+          })
+
+          this.props.updateUser(res.data);
+
+           this.handleClose();
+        }
+      }
 
   
     render() {
       return (
         <div>
 
-
+          
         <div>
           <Button onClick={this.handleClickOpen}>Login | Sign Up</Button>
           <Dialog
@@ -119,7 +139,7 @@ import axios from 'axios';
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleClose} color="primary">
+              <Button onClick={this.login} color="primary">
                 Login
               </Button>
               <Button onClick={this.handleSignUpCloseOpen} color="primary">
@@ -202,4 +222,8 @@ import axios from 'axios';
     }
   }
 
-export default Login;
+const mapDispathtoProps = {
+  updateUser
+}
+
+export default connect(null, mapDispathtoProps)(Login);

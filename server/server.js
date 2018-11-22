@@ -30,6 +30,8 @@ app.get(`/product/brand/get-all`,controller.allBrands)
 
 app.post('/auth/signup', authCTRL.signup)
 
+app.post(`/auth/login`,authCTRL.login)
+
  
 
 app.listen(SERVER_PORT, console.log(`The Great Outdoors is calling on port ${SERVER_PORT}`));

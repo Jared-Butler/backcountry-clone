@@ -19,8 +19,40 @@ module.exports={
         {let salt = bcrypt.genSaltSync(10);
         let hash = bcrypt.hashSync(password, salt)
         let [createdUser] = await db.customer.create_customer([firstName, lastName, email, hash]);
-        req.session.user = {email: createdUser.cust_email, id: createdUser.cust_id, fName: createdUser.cust_first_name, lNam3: createdUser.cust_last_name};
-        res.status(200).send({status: 'loggedIn'})};
+        req.session.user = {email: createdUser.cust_email, id: createdUser.cust_id, fName: createdUser.cust_first_name, lName: createdUser.cust_last_name};
+        res.status(200).send(req.session.user)};
 
-       }
+       },
+
+       async login(req, res, next) {
+           /*
+            1. check to make sure user has an email from req.body
+                a. If not, send them back a propper error message
+            2. compare password using the compareSync method from bcrypt.
+                a. If incorrect, send back the propper message
+            3. put logged in user on req.session
+            4.. send the propper status.
+           */
+
+           let {email, password} = req.body;
+           let db = req.app.get('db');
+           let [foundUser] = await db.customer.find_user([email]);
+           if (foundUser) {
+               let result = bcrypt.compareSync(password, foundUser.cust_hash)
+               if (result) {
+                   req.session.user = {
+                       email: foundUser.cust_email, 
+                       id: foundUser.cust_id, 
+                       fName: foundUser.cust_first_name, 
+                       lName: foundUser.cust_last_name
+                    }
+                   res.status(200).send(req.session.user)
+               }
+               else{res.status(401).send('Incorrect Password')}
+           }
+           else { res.status(401).send('Email not found')}
+       },
+
+
+
 }
