@@ -1,0 +1,10 @@
+.AccList{
+    display: flex;
+
+}
+
+.list{
+    flex-direction: column;
+    margin-top: 400px;
+    justify-content: space-around;
+}

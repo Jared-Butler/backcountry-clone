@@ -4,6 +4,7 @@ const massive = require('massive');
 const controller = require('./controller');
 const authCTRL = require('./authCTRL');
 const session = require('express-session')
+const custCTRL = require('./custCTRL');
 
 const {SERVER_PORT, MASSIVE_CONNECTION, SECRET} = process.env;
 
@@ -31,6 +32,8 @@ app.get(`/product/brand/get-all`,controller.allBrands)
 app.post('/auth/signup', authCTRL.signup)
 
 app.post(`/auth/login`,authCTRL.login)
+
+app.post(`/cust/add-address`, custCTRL.addAddress)
 
  
 

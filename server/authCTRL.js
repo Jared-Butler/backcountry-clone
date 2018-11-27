@@ -19,7 +19,17 @@ module.exports={
         {let salt = bcrypt.genSaltSync(10);
         let hash = bcrypt.hashSync(password, salt)
         let [createdUser] = await db.customer.create_customer([firstName, lastName, email, hash]);
-        req.session.user = {email: createdUser.cust_email, id: createdUser.cust_id, fName: createdUser.cust_first_name, lName: createdUser.cust_last_name};
+        req.session.user = {
+            email: createdUser.cust_email, 
+            id: createdUser.cust_id, 
+            fName: createdUser.cust_first_name, 
+            lName: createdUser.cust_last_name,
+            add1: createdUser.address_1,
+            add2: createdUser.address_2,
+            city: createdUser.city,
+            state: createdUser.state,
+            zip: createdUser.zip,
+            photo: createdUser.cust_photo,};
         res.status(200).send(req.session.user)};
 
        },
@@ -41,10 +51,16 @@ module.exports={
                let result = bcrypt.compareSync(password, foundUser.cust_hash)
                if (result) {
                    req.session.user = {
-                       email: foundUser.cust_email, 
+                       email: foundUser.email, 
                        id: foundUser.cust_id, 
                        fName: foundUser.cust_first_name, 
-                       lName: foundUser.cust_last_name
+                       lName: foundUser.cust_last_name,
+                       add1: foundUser.address_1,
+                       add2: foundUser.address_2,
+                       city: foundUser.city,
+                       state: foundUser.state,
+                       zip: foundUser.zip,
+                       photo: foundUser.cust_photo,
                     }
                    res.status(200).send(req.session.user)
                }

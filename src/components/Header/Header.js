@@ -36,7 +36,7 @@ class Header extends Component {
             if (this.props.user.fName){
                 return (
                     <div>
-                    Welcome {this.props.user.fName} 
+                   <Link to='/account'> Welcome {this.props.user.fName} </Link>
 
                 
 
