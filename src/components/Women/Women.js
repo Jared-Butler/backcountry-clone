@@ -8,6 +8,7 @@ import axios from 'axios';
 import './Women.css';
 import {connect} from 'react-redux';
 import { updateCart } from './../../ducks/reducer';
+import Products from './ProdWindow';
 
 class Women extends Component{
     constructor(){
@@ -65,20 +66,16 @@ addToCart = product => {
 
      products = <p>Nothing Rendered</p>
 }
-else{
-    products = this.state.productsArr.map( (obj, index) => {
-        return(
-            <div key={index} className="prodBox">
-
-                <img src={obj.image_url} alt='' className="prodBoxImg" />
-                <p className="prodBoxName">{obj.product_name}</p>
-                <p className="prodBoxPrice">${obj.price}</p>
-                <button onClick={() => this.addToCart(obj)}>Add to Cart</button>
-
-            </div>
-        )
-    } )
-}
+products = this.state.productsArr.map( (obj, index) => {
+    return(
+        
+<Products 
+addToCart={this.addToCart}
+obj={obj}
+index={index}
+/>
+    )
+} )
 
         return(
             <div className="page">
