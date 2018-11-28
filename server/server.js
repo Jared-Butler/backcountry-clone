@@ -38,6 +38,8 @@ app.post(`/cust/add-address`, custCTRL.addAddress)
 
 app.get(`/api/clothing/mens`, prodCTRL.getAllMensClothes)
 
+app.get(`/api/clothing/womens`, prodCTRL.getAllWomensClothes)
+
  
 
 app.listen(SERVER_PORT, console.log(`The Great Outdoors is calling on port ${SERVER_PORT}`));

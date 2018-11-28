@@ -27,7 +27,28 @@ class Men extends Component{
 
 
 
-    addToCart = () => {};
+    // invoke with product object instead of just the id;.
+addToCart = product => {
+    const { product_id } = product;
+    if (!this.props.user.email) {
+      alert('Please login to add items to your cart');
+    } else {
+      const cartArr = this.props.cart;
+      let itemFound = false;
+      for (let i = 0; i < cartArr.length; i++) {
+        const currentProduct = cartArr[i];
+        if (product_id === currentProduct.product_id) {
+          currentProduct.qty += 1;
+          itemFound = true;
+        }
+      }
+      if (!itemFound) {
+        this.props.updateCart([...cartArr, { ...product, qty: 1 }]);
+      } else {
+        this.props.updateCart([...cartArr]);
+      }
+    }
+  };
 
 
 
@@ -49,7 +70,7 @@ else{
                 <img src={obj.image_url} alt='' className="prodBoxImg" />
                 <p className="prodBoxName">{obj.product_name}</p>
                 <p className="prodBoxPrice">${obj.price}</p>
-                <button>Add to Cart</button>
+                <button onClick={() => this.addToCart(obj)}>Add to Cart</button>
 
             </div>
         )
