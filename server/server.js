@@ -24,6 +24,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+app.use( express.static( `${__dirname}/../build` ) );
 
 // How to create sub folders in the db folder and call them in the server using massive.
 // app.get('api/test',(req, res) => {req.get('db').folder.file})
