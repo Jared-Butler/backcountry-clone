@@ -28,25 +28,38 @@ class Men extends Component{
 
 
 
-    // invoke with product object instead of just the id;.
-addToCart = product => {
+  addToCart = async (product, user) => {
     const { product_id } = product;
+    const { id } = user;
     if (!this.props.user.email) {
+        //Add Material UI pop up here for a neater alert.
       alert('Please login to add items to your cart');
     } else {
+
       const cartArr = this.props.cart;
       let itemFound = false;
       for (let i = 0; i < cartArr.length; i++) {
         const currentProduct = cartArr[i];
         if (product_id === currentProduct.product_id) {
-          currentProduct.qty += 1;
           itemFound = true;
         }
       }
       if (!itemFound) {
-        this.props.updateCart([...cartArr, { ...product, qty: 1 }]);
+          //using axios call here to add new items to the database.
+        let res = await axios.put(`/api/cart/add`, {
+            product_id: product_id, 
+            cust_id: id, 
+            qty: 1
+          })
+          this.props.updateCart(res.data);
+       
       } else {
-        this.props.updateCart([...cartArr]);
+          //using axios call here to update qty in database.
+         let res = await axios.put(`/api/cart/addone`,{
+            product_id: product_id, 
+            cust_id: id
+          })
+        this.props.updateCart(res.data);
       }
     }
   };
@@ -64,24 +77,13 @@ addToCart = product => {
      return <p>Nothing Rendered</p>
 }
 
-    // products = this.state.productsArr.map( (obj, index) => {
-    //     return(
-    //         <div key={index} className="prodBox">
-
-    //             <img src={obj.image_url} alt='' className="prodBoxImg" />
-    //             <p className="prodBoxName">{obj.product_name}</p>
-    //             <p className="prodBoxPrice">${obj.price}</p>
-    //             <button onClick={() => this.addToCart(obj)}>Add to Cart</button>
-
-    //         </div>
-    //     )
-    // } )
-
 
     products = this.state.productsArr.map( (obj, index) => {
         return(
             
     <Products 
+    key={obj.product_id}
+    user={this.props.user}
     addToCart={this.addToCart}
     obj={obj}
     index={index}

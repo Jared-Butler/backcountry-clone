@@ -40,6 +40,14 @@ app.get(`/api/clothing/mens`, prodCTRL.getAllMensClothes)
 
 app.get(`/api/clothing/womens`, prodCTRL.getAllWomensClothes)
 
+app.get(`/api/cart/:id`, prodCTRL.getCart)
+
+app.post(`/api/cart/add`, prodCTRL.addToCart)
+
+app.put(`/api/cart/addone`, prodCTRL.addOneToQTY)
+
+app.put(`/api/cart/minusone`, prodCTRL.minusOneToQTY)
+
  
 
 app.listen(SERVER_PORT, console.log(`The Great Outdoors is calling on port ${SERVER_PORT}`));

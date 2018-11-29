@@ -31,28 +31,41 @@ class Women extends Component{
 
 
 
-    // invoke with product object instead of just the id;.
-addToCart = product => {
-    const { product_id } = product;
-    if (!this.props.user.email) {
-      alert('Please login to add items to your cart');
-    } else {
-      const cartArr = this.props.cart;
-      let itemFound = false;
-      for (let i = 0; i < cartArr.length; i++) {
-        const currentProduct = cartArr[i];
-        if (product_id === currentProduct.product_id) {
-          currentProduct.qty += 1;
-          itemFound = true;
+    addToCart = async (product, user) => {
+        const { product_id } = product;
+        const { id } = user;
+        if (!this.props.user.email) {
+            //Add Material UI pop up here for a neater alert.
+          alert('Please login to add items to your cart');
+        } else {
+    
+          const cartArr = this.props.cart;
+          let itemFound = false;
+          for (let i = 0; i < cartArr.length; i++) {
+            const currentProduct = cartArr[i];
+            if (product_id === currentProduct.product_id) {
+              itemFound = true;
+            }
+          }
+          if (!itemFound) {
+              //using axios call here to add new items to the database.
+            let res = await axios.put(`/api/cart/add`, {
+                product_id: product_id, 
+                cust_id: id, 
+                qty: 1
+              })
+              this.props.updateCart(res.data);
+           
+          } else {
+              //using axios call here to update qty in database.
+             let res = await axios.put(`/api/cart/addone`,{
+                product_id: product_id, 
+                cust_id: id
+              })
+            this.props.updateCart(res.data);
+          }
         }
-      }
-      if (!itemFound) {
-        this.props.updateCart([...cartArr, { ...product, qty: 1 }]);
-      } else {
-        this.props.updateCart([...cartArr]);
-      }
-    }
-  };
+      };
 
 
 
@@ -62,7 +75,7 @@ addToCart = product => {
 
         let products = '';
 
-       if (this.state.productsArr === []) { 
+       if (this.state.productsArr === 0) { 
 
      products = <p>Nothing Rendered</p>
 }
@@ -70,6 +83,8 @@ products = this.state.productsArr.map( (obj, index) => {
     return(
         
 <Products 
+key={obj.product_id}
+user={this.props.user}
 addToCart={this.addToCart}
 obj={obj}
 index={index}

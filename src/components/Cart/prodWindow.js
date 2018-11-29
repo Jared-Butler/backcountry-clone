@@ -1,7 +1,7 @@
 import React from 'react';
 
 let Products = (props) => {
-const {user, obj, index, addToCart} = props;
+const {add, minus, user, obj, index} = props;
     
         return (
             <div key={index} className="prodBox">
@@ -9,8 +9,10 @@ const {user, obj, index, addToCart} = props;
                 <img src={obj.image_url} alt='' className="prodBoxImg" />
                 <p className="prodBoxName">{obj.product_name}</p>
                 <p className="prodBoxPrice">${obj.price}</p>
-                <button onClick={() => addToCart(obj, user)}>Add to Cart</button>
-                <button>Add to Cart v2</button>
+                <p>Qty:{obj.qty}</p>
+                {/* <button onClick={() => add(obj, user)}>Add 1</button> */}
+                {/* <button onclick={() => minus(obj, user)}>Subtract 1</button> */}
+                {/* <button onclick={}>Delete</button> */}
 
             </div>
         )
