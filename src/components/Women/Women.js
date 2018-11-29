@@ -49,7 +49,7 @@ class Women extends Component{
           }
           if (!itemFound) {
               //using axios call here to add new items to the database.
-            let res = await axios.put(`/api/cart/add`, {
+            let res = await axios.post(`/api/cart/add`, {
                 product_id: product_id, 
                 cust_id: id, 
                 qty: 1
