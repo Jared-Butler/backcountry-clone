@@ -58,7 +58,7 @@ class Women extends Component{
            
           } else {
               //using axios call here to update qty in database.
-             let res = await axios.put(`/api/cart/addone`,{
+             let res = await axios.put(`/api/cart/add/one`,{
                 product_id: product_id, 
                 cust_id: id
               })

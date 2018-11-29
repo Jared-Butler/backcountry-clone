@@ -45,9 +45,9 @@ app.get(`/api/cart/:id`, prodCTRL.getCart)
 
 app.post(`/api/cart/add`, prodCTRL.addToCart)
 
-app.put(`/api/cart/addone`, prodCTRL.addOneToQTY)
+app.put(`/api/cart/add/one`, prodCTRL.addOneToQTY)
 
-app.put(`/api/cart/minusone`, prodCTRL.minusOneToQTY)
+app.put(`/api/cart/minus/one`, prodCTRL.minusOneToQTY)
 
  
 
