@@ -1,18 +1,19 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 let Products = (props) => {
-const {add, minus, user, obj, index} = props;
+const {add, minus, user,  product} = props;
     
         return (
-            <div key={index} className="prodBox">
+            <div className="prodBox">
 
-                <img src={obj.image_url} alt='' className="prodBoxImg" />
-                <p className="prodBoxName">{obj.product_name}</p>
-                <p className="prodBoxPrice">${obj.price}</p>
-                <p>Qty:{obj.qty}</p>
-                {/* <button onClick={() => add(obj, user)}>Add 1</button> */}
-                {/* <button onclick={() => minus(obj, user)}>Subtract 1</button> */}
-                {/* <button onclick={}>Delete</button> */}
+                <img src={props.image_url} alt='' className="prodBoxImg" />
+                <p className="prodBoxName">{props.product_name}</p>
+                <p className="prodBoxPrice">${props.price}</p>
+                <p>Qty:{props.qty}</p>
+                <button onClick={() => add(product, user)}>Add 1</button>
+                <button onClick={() => minus(product, user)}>Subtract 1</button>
+                {/* <button onClick={}>Delete</button> */}
 
             </div>
         )
@@ -21,4 +22,11 @@ const {add, minus, user, obj, index} = props;
    
 }
 
-export default Products;
+const mapStatetoProps = (state, index) => {
+    return {
+        cart: state.cart
+        
+    }
+}
+
+export default connect(mapStatetoProps,null)(Products);

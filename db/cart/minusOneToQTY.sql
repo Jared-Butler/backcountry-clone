@@ -1,5 +1,5 @@
 update cart
-set qty = qty + 1
+set qty = qty - 1
 where product_id = ($1) and cust_id = ($2);
 
 select 

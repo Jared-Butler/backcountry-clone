@@ -9,61 +9,59 @@ class Cart extends Component{
     constructor(){
         super();
         this.state = {
-            productsArr: []
         }
     }
 
-    componentDidMount = async () => {
+    async componentDidMount(){
         //finish setting up an on render set state method for the cart
         if (this.props.user.id)
            {this.populateCart()}
         
     };
+    
 
     populateCart = async () => {
         let res = await axios.get(`/api/cart/${this.props.user.id}`)
         this.props.updateCart(res.data)
-        await this.setState({productsArr: this.props.cart})
     }
 
-    // addOne = async (product, user) => {
-    //     const { product_id } = product;
-    //     const { id } = user;
+    addOne = async (product, user) => {
+        const { product_id } = product;
+        const { id } = user;
 
-    //     let res = await axios.put(`/api/cart/addone`,{
-    //         product_id: product_id, 
-    //         cust_id: id
-    //       })
-    //     this.props.updateCart(res.data);
-    // }
+        let res = await axios.put(`/api/cart/add/one`,{
+            product_id: product_id, 
+            cust_id: id
+          })
+        this.props.updateCart(res.data);
+    }
 
-    // minusOne = async (product, user) => {
-    //     const { product_id } = product;
-    //     const { id } = user;
-    //     console.log('Clicked');
-    //     let res = await axios.put(`/api/cart/minusone`,{
-    //         product_id: product_id, 
-    //         cust_id: id
-    //       })
-    //     this.props.updateCart(res.data);
-    // }
+    minusOne = async (product, user) => {
+        const { product_id } = product;
+        const { id } = user;
+
+        let res = await axios.put(`/api/cart/minus/one`,{
+            product_id: product_id, 
+            cust_id: id
+          })
+        this.props.updateCart(res.data);
+    }
 
     render(){
 
-        let products = '';
-
-       if (this.state.productsArr.length === 0) { 
+       if (this.props.cart.length === 0) { 
 
      return <p>Nothing Rendered</p>
 }
-    products = this.state.productsArr.map( (obj, index) => {
+    let products = this.props.cart.map( (obj, index) => {
         return(
     <Products 
+    product={obj}
     key={obj.product_id}
     user={this.props.user}
-    // add={this.addOne()}
-    // minus={this.minusOne()}
-    obj={obj}
+    add={this.addOne}
+    minus={this.minusOne}
+    {...obj}
     index={index}
     />
         )
@@ -75,7 +73,6 @@ class Cart extends Component{
 
         return(
             <div className="page">
-            {() => this.componentDidMount()}
 
                 <div className="buffer"></div>
 
@@ -88,7 +85,7 @@ class Cart extends Component{
 
 
 const mapDispatchtoProps = {
-    updateCart
+    updateCart,
 }
 
 const mapStatetoProps = (state) => {

@@ -19,6 +19,7 @@ export default function reducer (
 
         case UPDATE_CART:
         return { ...state, cart: action.payload }
+        // return { ...state, cart: [...action.payload.map( (item) => ({...item}))] }
 
         default: return state;
     }
