@@ -47,6 +47,13 @@ class Cart extends Component{
         this.props.updateCart(res.data);
     }
 
+    deleteItem = async (product, user) => {
+        const {product_id} = product;
+        const {id} = user;
+        let res = await axios.delete(`/api/cart/delete/${product_id}/${id}`)
+        this.props.updateCart(res.data);
+    }
+
     render(){
 
        if (this.props.cart.length === 0) { 
@@ -61,6 +68,7 @@ class Cart extends Component{
     user={this.props.user}
     add={this.addOne}
     minus={this.minusOne}
+    deleteItem={this.deleteItem}
     {...obj}
     index={index}
     />

@@ -43,12 +43,22 @@ module.exports={
 
     async minusOneToQTY (req, res, next) {
         let db = req.app.get('db');
-        let {product_id, cust_id} = req.body;       
+        let {product_id, cust_id} = req.params;       
         let cartData = await db.cart.minusOneToQTY([product_id, cust_id, cust_id, cust_id])
         req.session.cart = cartData;
 
         res.status(200).send(req.session.cart)
 
+    },
+
+    async deleteFromCart(req, res, next) {
+        let db = req.app.get('db');
+        let {product_id, cust_id} = req.params;
+        let cartData = await db.cart.deleteItem([product_id, cust_id, cust_id]);
+
+        req.session.cart = cartData;
+
+        res.status(200).send(req.session.cart);
     },
 
 
