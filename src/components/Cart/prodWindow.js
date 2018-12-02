@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 let Products = (props) => {
-const {add, minus, deleteItem, user,  product} = props;
+const {add, deleteItem, minusDelete, user,  product} = props;
     
         return (
             <div className="prodBox">
@@ -12,10 +12,8 @@ const {add, minus, deleteItem, user,  product} = props;
                 <p className="prodBoxPrice">${props.price}</p>
                 <p>Qty:{props.qty}</p>
                 <button onClick={() => add(product, user)}>Add 1</button>
-                <button onClick={() => minus(product, user)}>Subtract 1</button>
+                <button onClick={() => minusDelete(product, user)}>Subtract 1</button>
                 <button onClick={() => deleteItem(product, user)}>Remove from Cart</button>
-                {/* <button onClick={}>Delete</button> */}
-
             </div>
         )
     

@@ -61,5 +61,25 @@ module.exports={
         res.status(200).send(req.session.cart);
     },
 
+    async checkOut(req, res, next) {
+        let db = req.app.get('db');
+        let {cust_id, price, items} = req.body;
+        let orderData = await db.cart.checkOut([cust_id, price, items, cust_id]);
+
+        req.session.orders = orderData;
+
+        res.status(200).send(req.session.orders);
+    },
+
+    async deleteCart(req, res, next) {
+        let db = req.app.get('db');
+        let {id} = req.params;
+        let cartData = await db.cart.deleteCart([id, id]);
+
+        req.session.cart = cartData;
+
+        res.status(200).send(req.session.cart);
+    },
+
 
 }

@@ -1,12 +1,16 @@
 const initialState = {
 brands: [],
 user: {},
-cart: []
+cart: [],
+total: 0,
+orders: []
 
 }
 
 const UPDATE_USER = 'UPDATE_USER';
 const UPDATE_CART = 'UPDATE_CART';
+const TOTAL = 'TOTAL'
+const UPDATE_PAST_ORDERS = 'UPDATE_PAST_ORDERS'
 
 
 export default function reducer (
@@ -19,7 +23,12 @@ export default function reducer (
 
         case UPDATE_CART:
         return { ...state, cart: action.payload }
-        // return { ...state, cart: [...action.payload.map( (item) => ({...item}))] }
+
+        case TOTAL:
+        return { ...state, total: action.payload }
+
+        case UPDATE_PAST_ORDERS:
+        return { ...state, orders: action.payload }
 
         default: return state;
     }
@@ -37,6 +46,20 @@ export function updateUser(userData){
 export function updateCart(prodData){
     return {
         type: UPDATE_CART,
+        payload: prodData
+    }
+}
+
+export function getTotal(total){
+    return {
+        type: TOTAL,
+        payload: total
+    }
+}
+
+export function updatePastOrders(prodData){
+    return {
+        type: UPDATE_PAST_ORDERS,
         payload: prodData
     }
 }

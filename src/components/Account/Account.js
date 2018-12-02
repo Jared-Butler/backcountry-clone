@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import AccList from './AccList';
 import AddressInput from './AddAddress';
+import CustInfo from './infoDisplay';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
@@ -10,11 +11,21 @@ class Account extends Component{
   
 
     componentDidMount() {
-      if (!this.props.user.id ) {this.props.history.push('/') }
+      if (!this.props.user.id ) {this.props.history.push('/') };
+    //   this.handleAddressRender();
     }
 
-    handleAddressRender() {
-
+    handleAddressRender = () => {
+        if(!this.props.user.add1){
+            return(
+                <AddressInput />
+            )
+        }
+        else{
+            return(
+                <CustInfo />
+            )
+            }
     }
     
 
@@ -25,7 +36,8 @@ class Account extends Component{
 
             <AccList/>
             
-            <AddressInput />
+            {this.handleAddressRender()}
+            {/* <AddressInput /> */}
 
             
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Cart.css';
 import {connect} from 'react-redux';
-import { updateCart } from './../../ducks/reducer';
+import { updateCart, getTotal, updatePastOrders } from './../../ducks/reducer';
 import Products from './prodWindow';
 import axios from 'axios';
 
@@ -22,7 +22,8 @@ class Cart extends Component{
 
     populateCart = async () => {
         let res = await axios.get(`/api/cart/${this.props.user.id}`)
-        this.props.updateCart(res.data)
+        this.props.updateCart(res.data);
+        this.totalPrice()
     }
 
     addOne = async (product, user) => {
@@ -34,7 +35,14 @@ class Cart extends Component{
             cust_id: id
           })
         this.props.updateCart(res.data);
+        this.totalPrice();
     }
+
+    minusDelete = (product, user) => {
+        const { qty } = product;
+        
+        qty === 1 ? this.deleteItem(product, user) : this.minusOne(product, user)
+    };
 
     minusOne = async (product, user) => {
         const { product_id } = product;
@@ -45,6 +53,7 @@ class Cart extends Component{
             cust_id: id
           })
         this.props.updateCart(res.data);
+        this.totalPrice();
     }
 
     deleteItem = async (product, user) => {
@@ -52,7 +61,35 @@ class Cart extends Component{
         const {id} = user;
         let res = await axios.delete(`/api/cart/delete/${product_id}/${id}`)
         this.props.updateCart(res.data);
+        this.totalPrice();
     }
+
+    totalPrice = () => {
+           let total = this.props.cart.reduce( (acc, obj) => {
+                const {qty, price} = obj;
+                return acc + price *qty
+            },0 )   
+        this.props.getTotal(total);
+    }
+
+    checkOut = async () => {
+        const {id} = this.props.user;
+        const {cart, total} = this.props;
+       let res1 = await axios.post(`/api/cart/checkout`,{
+            cust_id: id,
+            price: total,
+            items: cart,
+        });
+        this.props.updatePastOrders(res1.data);
+
+        //set up stripe process to run here.
+
+        let res = await axios.delete(`/api/cart/checkout/${id}`);
+        this.props.updateCart(res.data);
+        this.props.getTotal(total);
+    }
+
+
 
     render(){
 
@@ -68,9 +105,11 @@ class Cart extends Component{
     user={this.props.user}
     add={this.addOne}
     minus={this.minusOne}
+    minusDelete={this.minusDelete}
     deleteItem={this.deleteItem}
     {...obj}
     index={index}
+    
     />
         )
     } )
@@ -84,7 +123,10 @@ class Cart extends Component{
 
                 <div className="buffer"></div>
 
+                <h3>${this.props.total}</h3>
+
                 {products}
+                <button onClick={this.checkOut}>CheckOut</button>
             </div>
         )
     }
@@ -94,12 +136,15 @@ class Cart extends Component{
 
 const mapDispatchtoProps = {
     updateCart,
+    getTotal,
+    updatePastOrders
 }
 
 const mapStatetoProps = (state) => {
     return {
         cart: state.cart,
-        user: state.user
+        user: state.user,
+        total: state.total
     }
 }
 

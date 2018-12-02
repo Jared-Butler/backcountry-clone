@@ -51,6 +51,10 @@ app.put(`/api/cart/minus/one`, prodCTRL.minusOneToQTY)
 
 app.delete(`/api/cart/delete/:product_id/:cust_id`, prodCTRL.deleteFromCart)
 
+app.post(`/api/cart/checkout`, prodCTRL.checkOut)
+
+app.delete(`/api/cart/checkout/:id`, prodCTRL.deleteCart)
+
  
 
 app.listen(SERVER_PORT, console.log(`The Great Outdoors is calling on port ${SERVER_PORT}`));
