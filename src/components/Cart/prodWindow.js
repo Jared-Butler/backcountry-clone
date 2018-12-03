@@ -5,6 +5,7 @@ let Products = (props) => {
 const {add, deleteItem, minusDelete, user,  product} = props;
     
         return (
+
             <div className="prodBox">
 
                 <img src={props.image_url} alt='' className="prodBoxImg" />
@@ -15,6 +16,7 @@ const {add, deleteItem, minusDelete, user,  product} = props;
                 <button onClick={() => minusDelete(product, user)}>Subtract 1</button>
                 <button onClick={() => deleteItem(product, user)}>Remove from Cart</button>
             </div>
+            
         )
     
 

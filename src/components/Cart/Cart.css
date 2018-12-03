@@ -1,9 +1,26 @@
 .page{
     width: 100vw;
+    height: 100vh;
+
+    /* display: flex;
+    flex-wrap: wrap; */
+    justify-content: space-around;
+    background-color: #e3e3e3;
+}
+
+.prodPage{
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     background-color: #e3e3e3;
+}
+
+.prodBox{
+    width: 70%;
+    flex-wrap: wrap;
+
 }
 
 .cartBuffer{
@@ -14,4 +31,8 @@
 .empty{
     font-size: 40px;
     padding: 200px;
+}
+
+.total{
+    width: 100%;
 }

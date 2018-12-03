@@ -100,6 +100,7 @@ class Men extends Component{
         return(
             <div className="page">
                 <div className="buffer"></div>
+
                 {products}
 
             </div>

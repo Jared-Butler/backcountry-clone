@@ -141,9 +141,13 @@ class Cart extends Component{
 
                 <div className="buffer"></div>
 
-                <h3 className='total'>${this.props.total}</h3>
+                <h3 className='total'>Order Total: ${this.props.total}</h3>
+                <br/>
 
                 {products}
+
+                <br />
+                
                 <StripeCheckout
                 className='prodBox' 
                 name="High Country Products"
