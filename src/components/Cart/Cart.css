@@ -6,7 +6,12 @@
     background-color: #e3e3e3;
 }
 
-.buffer{
+.cartBuffer{
     width: 100%;
-    height: 165px;
+    height: 100vh;
+}
+
+.empty{
+    font-size: 40px;
+    padding: 200px;
 }

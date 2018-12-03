@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import { updateCart, getTotal, updatePastOrders } from './../../ducks/reducer';
 import Products from './prodWindow';
 import axios from 'axios';
+import StripeCheckout from 'react-stripe-checkout';
 
 class Cart extends Component{
     constructor(){
@@ -72,10 +73,11 @@ class Cart extends Component{
         this.props.getTotal(total);
     }
 
-    checkOut = async () => {
+    checkOut = async (stripeID) => {
         const {id} = this.props.user;
         const {cart, total} = this.props;
        let res1 = await axios.post(`/api/cart/checkout`,{
+           stripe_id: stripeID,
             cust_id: id,
             price: total,
             items: cart,
@@ -89,13 +91,29 @@ class Cart extends Component{
         this.props.getTotal(total);
     }
 
+    onTokenReceived = token => {
+        //this sets the token to 'undefined'
+        token.card = void 0;
+        axios.post(`/api/cart/checkout/charge`, {token, amount: this.props.total*100})
+        .then( res => {
+            alert("Payment processed successfully!");
+            this.checkOut(res.data.id)
+        })
+    }
+
 
 
     render(){
-
        if (this.props.cart.length === 0) { 
 
-     return <p>Nothing Rendered</p>
+     return (
+         <div>
+             <div className="cartBuffer">
+             <p className="empty" >Your cart is empty!</p>
+
+             </div>
+         </div>
+     )
 }
     let products = this.props.cart.map( (obj, index) => {
         return(
@@ -123,10 +141,19 @@ class Cart extends Component{
 
                 <div className="buffer"></div>
 
-                <h3>${this.props.total}</h3>
+                <h3 className='total'>${this.props.total}</h3>
 
                 {products}
-                <button onClick={this.checkOut}>CheckOut</button>
+                <StripeCheckout
+                className='prodBox' 
+                name="High Country Products"
+                description="Payment Handler"
+                token= {this.onTokenReceived}
+                stripeKey={process.env.REACT_APP_KEYPUBLISHABLE}
+                amount={this.props.total*100}
+                />
+
+                
             </div>
         )
     }

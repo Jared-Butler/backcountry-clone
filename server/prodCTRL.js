@@ -63,8 +63,8 @@ module.exports={
 
     async checkOut(req, res, next) {
         let db = req.app.get('db');
-        let {cust_id, price, items} = req.body;
-        let orderData = await db.cart.checkOut([cust_id, price, items, cust_id]);
+        let {cust_id, price, items, stripe_id} = req.body;
+        let orderData = await db.cart.checkOut([cust_id, price, items, cust_id, stripe_id]);
 
         req.session.orders = orderData;
 

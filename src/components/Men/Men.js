@@ -14,6 +14,7 @@ class Men extends Component{
             productsArr: []
         }
     }
+    
 
      componentDidMount = async () => {
         await axios.get(`/api/clothing/mens`)
@@ -69,6 +70,7 @@ class Men extends Component{
 
 
     render(){
+        
 
         let products = '';
 
@@ -98,8 +100,8 @@ class Men extends Component{
         return(
             <div className="page">
                 <div className="buffer"></div>
-
                 {products}
+
             </div>
         )
     }

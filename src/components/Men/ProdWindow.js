@@ -10,7 +10,6 @@ const {user, obj, index, addToCart} = props;
                 <p className="prodBoxName">{obj.product_name}</p>
                 <p className="prodBoxPrice">${obj.price}</p>
                 <button onClick={() => addToCart(obj, user)}>Add to Cart</button>
-                <button>Add to Cart v2</button>
 
             </div>
         )

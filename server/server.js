@@ -6,8 +6,9 @@ const authCTRL = require('./authCTRL');
 const session = require('express-session')
 const custCTRL = require('./custCTRL');
 const prodCTRL = require('./prodCTRL');
+const stripeCTRL = require('./stripeCTRL');
 
-const {SERVER_PORT, MASSIVE_CONNECTION, SECRET} = process.env;
+const {SERVER_PORT, MASSIVE_CONNECTION, SECRET, keyPublishable, keySecret} = process.env;
 
 const app = express();
 
@@ -19,6 +20,7 @@ massive(MASSIVE_CONNECTION).then(db => {
 
 //Middleware
 app.use(express.json());
+//express.json is used in place of body-parser
 app.use(session({
     secret: SECRET,
     resave: false,
@@ -54,6 +56,10 @@ app.delete(`/api/cart/delete/:product_id/:cust_id`, prodCTRL.deleteFromCart)
 app.post(`/api/cart/checkout`, prodCTRL.checkOut)
 
 app.delete(`/api/cart/checkout/:id`, prodCTRL.deleteCart)
+
+//stripe url
+
+app.post(`/api/cart/checkout/charge`, stripeCTRL.postRequest)
 
  
 
