@@ -24,7 +24,7 @@ class App extends Component {
 
           {routes}
 
-          <Footer/>
+          {/* <Footer/> */}
 
          </div>
      </CssBaseline>
